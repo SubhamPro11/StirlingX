@@ -1,10 +1,10 @@
 import type { CSSProperties } from "react";
-import markUrl from "@app/assets/brand/branding-logo/logo-mark.svg";
+import markUrl from "@app/assets/brand/branding-logo/logo-mark.png";
 import wordmarkLightUrl from "@app/assets/brand/branding-logo/wordmark-light.svg";
 import wordmarkDarkUrl from "@app/assets/brand/branding-logo/wordmark-dark.svg";
 import "@app/ui/Logo.css";
 
-/** iconOnly = mark; textOnly = "Stirling" wordmark; iconAndText = both. */
+/** iconOnly = mark; textOnly = "StirlingX" wordmark; iconAndText = both. */
 export type LogoVariant = "iconOnly" | "iconAndText" | "textOnly";
 
 interface LogoProps {
@@ -36,7 +36,7 @@ export function Logo({
   gap = "0.5rem",
   className,
   style,
-  alt = "Stirling",
+  alt = "StirlingX",
 }: LogoProps) {
   const showIcon = variant === "iconOnly" || variant === "iconAndText";
   const showText = variant === "textOnly" || variant === "iconAndText";

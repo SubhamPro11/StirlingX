@@ -15,6 +15,11 @@
 .sui-logo__wordmark {
   display: block;
   width: auto;
+  object-fit: contain;
+}
+
+.sui-logo__mark {
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
 }
 
 /* Light wordmark by default; dark wordmark only under a dark scheme. */
