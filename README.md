@@ -1,69 +1,122 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Stirling-Tools/Stirling-PDF/main/docs/stirling.png" width="80" alt="Stirling PDF logo">
+  <img src="frontend/editor/src/core/assets/brand/branding-logo/logo-mark.png" width="120" alt="StirlingX logo">
 </p>
 
-<h1 align="center">Stirling PDF - The Open-Source PDF Platform</h1>
-
-Stirling PDF is a powerful, open-source PDF editing platform. Run it as a personal desktop app, in the browser, or deploy it on your own servers with a private API. Edit, sign, redact, convert, and automate PDFs without sending documents to external services.
+<h1 align="center">StirlingX — Next-Generation PDF Studio</h1>
 
 <p align="center">
+  <b>The modern, privacy-first open-source PDF workspace with custom studio UI and 50+ PDF operations.</b>
+</p>
+
+<p align="center">
+  <a href="https://github.com/SubhamPro11/StirlingX">
+    <img src="https://img.shields.io/badge/StirlingX-Custom_Studio_UI-blue?style=for-the-badge&logo=pdf" alt="StirlingX">
+  </a>
+  <a href="https://github.com/SubhamPro11/StirlingX/blob/main/LICENSE">
+    <img src="https://img.shields.io/badge/License-GPL--3.0-green?style=for-the-badge" alt="License">
+  </a>
   <a href="https://hub.docker.com/r/stirlingtools/stirling-pdf">
-    <img src="https://img.shields.io/docker/pulls/frooodle/s-pdf" alt="Docker Pulls">
-  </a>
-  <a href="https://discord.gg/HYmhKj45pU">
-    <img src="https://img.shields.io/discord/1068636748814483718?label=Discord" alt="Discord">
-  </a>
-  <a href="https://scorecard.dev/viewer/?uri=github.com/Stirling-Tools/Stirling-PDF">
-    <img src="https://api.scorecard.dev/projects/github.com/Stirling-Tools/Stirling-PDF/badge" alt="OpenSSF Scorecard">
-  </a>
-  <a href="https://github.com/Stirling-Tools/stirling-pdf">
-    <img src="https://img.shields.io/github/stars/stirling-tools/stirling-pdf?style=social" alt="GitHub Repo stars">
+    <img src="https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker">
   </a>
 </p>
 
-![Stirling PDF - Dashboard](images/home-light.png)
+---
 
-## Key Capabilities
+## ✨ What is StirlingX?
 
-- **Everywhere you work** - Desktop client, browser UI, and self-hosted server with a private API.
-- **50+ PDF tools** - Edit, merge, split, sign, redact, convert, OCR, compress, and more.
-- **Automation & workflows** - No-code pipelines direct in UI with APIs to process millions of PDFs.
-- **Enterprise‑grade** - SSO, auditing, and flexible on‑prem deployments.
-- **Developer platform** - REST APIs available for nearly all tools to integrate into your existing systems.
-- **Global UI** - Interface available in 40+ languages.
+**StirlingX** is a complete modern redesign of Stirling PDF, tailored for seamless document manipulation, enhanced usability, and client-side privacy. It delivers a fast studio interface paired with the Spring Boot PDF processing engine.
 
-For a full feature list, see the docs: **https://docs.stirlingpdf.com**
+### 🎨 UI & UX Highlights
 
-## Quick Start
+- **🛸 Studio Landing Hub**: Interactive drag-and-drop canvas with dynamic animated glow borders and instant file upload cues.
+- **⚡ Popular Workflows Bento Grid**: One-click quick launch for top operations:
+  - **Merge & Combine** — Combine and reorder multiple PDFs.
+  - **Compress PDF** — Optimize file size with quality control.
+  - **Convert Format** — Convert to/from Word, Excel, PowerPoint, Images, Markdown & HTML.
+  - **OCR & Searchable** — Extract text from scanned documents.
+  - **Sign & Fill** — Electronic signature drawing and form completion.
+  - **Protect & Encrypt** — Password encryption and permission restrictions.
+- **🕶️ Pitch Black Dark Mode (OLED / True Black)**: Pure `#000000` canvas and elevated dark surfaces (`#0f0f10`) for distraction-free reading.
+- **🤹 Auto-Hiding Viewer Navigation Bar**: The bottom floating navigation toolbar auto-retracts while reading and smoothly springs up on hover.
+- **💎 Glassmorphic Command Bar (`Ctrl+K`)**: Translucent header ribbon with universal search across tools and document contents.
+- **📄 Rounded Document Cards**: Refined file cards with hover elevation and active state indicators.
+- **🔒 100% Privacy**: Client-side execution available; no documents sent to third parties.
+
+---
+
+## 🚀 Quick Start with Docker Desktop
+
+Run StirlingX with the custom UI override:
 
 ```bash
-docker run -p 8080:8080 docker.stirlingpdf.com/stirlingtools/stirling-pdf
+docker compose up -d
 ```
 
-Then open: http://localhost:8080
+Or run via Docker CLI:
 
-For full installation options (including desktop and Kubernetes), see our [Documentation Guide](https://docs.stirlingpdf.com/#documentation-guide).
+```bash
+docker run -d \
+  -p 8080:8080 \
+  -v ./customFiles:/customFiles:rw \
+  -v ./configs:/configs:rw \
+  -v ./logs:/logs:rw \
+  --name stirling-pdf \
+  docker.stirlingpdf.com/stirlingtools/stirling-pdf:latest
+```
 
-## Resources
+Open your browser at **[http://localhost:8080](http://localhost:8080)**.
 
-- [**Documentation**](https://docs.stirlingpdf.com)
-- [**Homepage**](https://stirling.com)
-- [**API Docs**](https://registry.scalar.com/@stirlingpdf/apis/stirling-pdf-processing-api/)
-- [**Server Plan & Enterprise**](https://docs.stirlingpdf.com/Paid-Offerings)
+---
 
-## Support
+## 💻 Local Development
 
-- **Community**: [Discord](https://discord.gg/HYmhKj45pU)
-- **Bug Reports**: [GitHub Issues](https://github.com/Stirling-Tools/Stirling-PDF/issues)
+### 1. Unified Dev Mode (Backend + Frontend)
+```powershell
+# Windows PowerShell
+powershell -ExecutionPolicy Bypass -File scripts/dev.ps1
 
-## Contributing
+# Or using Task (if installed)
+task dev
+```
 
-We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+### 2. Frontend Only (Vite Dev Server)
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/dev-frontend.ps1
+```
+*Runs at `http://localhost:5173` with hot module replacement (HMR).*
 
-This project uses [Task](https://taskfile.dev/) as a unified command runner for all build, dev, and test commands. Run `task dev` to get started running the editor, run `task` to see the most common commands, or see the [Developer Guide](DeveloperGuide.md) for full details.
+### 3. Backend Only (Spring Boot)
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/dev-backend.ps1
+```
+*Runs at `http://localhost:8080`.*
 
-For adding translations, see the [Translation Guide](devGuide/HowToAddNewLanguage.md).
+---
 
-## License
+## 🔄 Building & Deploying the Custom UI
 
-Stirling PDF is open-core. See [LICENSE](LICENSE) for details.
+To rebuild the frontend bundle and update the static files in `customFiles/static/`:
+
+- **Windows (PowerShell)**:
+  ```powershell
+  powershell -ExecutionPolicy Bypass -File scripts/deploy-custom-ui.ps1
+  ```
+- **Linux / macOS (Bash)**:
+  ```bash
+  bash scripts/deploy-custom-ui.sh
+  ```
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend**: React 19 + TypeScript + Vite + Mantine UI + TailwindCSS + PDF.js + pdf-lib
+- **Backend**: Java 25 / Spring Boot + Apache PDFBox + LibreOffice + OCRmyPDF + Tesseract
+- **Icons & Branding**: Custom Glowing SX vector mark + Google Material Symbols
+- **Styling**: Vanilla CSS Design Tokens (`--c-*` semantic palette)
+
+---
+
+## 📄 License
+
+StirlingX is open-source software licensed under [GPL-3.0](LICENSE).
