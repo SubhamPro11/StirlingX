@@ -4981,9 +4981,18 @@ welcomeTitle = "You've been invited!"
 
 [landing]
 addFiles = "Add Files"
+dropHint = "or drop PDF files anywhere on this canvas"
 mobileUpload = "Upload from Mobile"
 openFromComputer = "Open from computer"
+popularWorkflows = "Popular Workflows"
+tagline = "Next-generation workspace for all your document workflows"
 uploadFromComputer = "Browse files"
+
+[landing.badge]
+privacy = "100% Client-Side Privacy Available"
+tools = "50+ Professional PDF Operations"
+unlimited = "High Capacity & No File Limits"
+
 
 [language]
 direction = "ltr"
@@ -12112,3 +12121,28 @@ confirm = "Extract"
 message_one = "This ZIP contains {{count}} file. Extract anyway?"
 message_other = "This ZIP contains {{count}} files. Extract anyway?"
 title = "Large ZIP File"
+
+[quickWorkflow.compress]
+desc = "Reduce file size while preserving quality"
+title = "Compress PDF"
+
+[quickWorkflow.convert]
+desc = "Convert PDF to/from Word, Images & more"
+title = "Convert Format"
+
+[quickWorkflow.merge]
+desc = "Combine multiple PDFs into a single file"
+title = "Merge & Combine"
+
+[quickWorkflow.ocr]
+desc = "Extract text from scanned documents"
+title = "OCR & Searchable"
+
+[quickWorkflow.protect]
+desc = "Encrypt with passwords & permissions"
+title = "Protect & Encrypt"
+
+[quickWorkflow.sign]
+desc = "Add electronic signatures & fill forms"
+title = "Sign & Fill"
+

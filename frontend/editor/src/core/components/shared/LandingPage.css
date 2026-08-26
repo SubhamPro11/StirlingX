@@ -1,11 +1,8 @@
 /* ============================================================
-   Landing Page styles.
-   All custom properties are defined in theme.css.
+   Landing Page — Modern Studio Hub Styles
+   Strictly complies with theme-lint (--c-* semantic tokens)
    ============================================================ */
 
-/* ── Entrance animation (editor empty state) ─────────────────
-   Logo fades/slides up first (0.2s), then the actions after it finishes
-   (0.2s delay + 0.2s) — 0.4s total. */
 @keyframes landing-fade-up {
   from {
     opacity: 0;
@@ -16,12 +13,20 @@
     transform: translateY(0);
   }
 }
+
+.landing-container {
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
 .landing-logo-enter {
-  animation: landing-fade-up 0.2s ease-out both;
+  animation: landing-fade-up 0.3s ease-out both;
 }
+
 .landing-actions-enter {
-  animation: landing-fade-up 0.2s ease-out 0.2s both;
+  animation: landing-fade-up 0.3s ease-out 0.15s both;
 }
+
 @media (prefers-reduced-motion: reduce) {
   .landing-logo-enter,
   .landing-actions-enter {
@@ -29,128 +34,204 @@
   }
 }
 
-/* ── Hero text ───────────────────────────────────────────── */
-.landing-title {
-  margin: 1.75rem 0 1.5rem;
-  text-align: center;
-  font-size: 2rem;
-  font-weight: 700;
-  line-height: 1.25;
-  color: var(--c-text);
+/* ── Hero Studio Card ───────────────────────────────────────── */
+.landing-hero-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 46rem;
+  padding: 2.5rem 2rem 2rem;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  border-radius: 1.5rem;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.landing-subtitle {
-  margin: 0;
-  margin-bottom: 1.5rem;
+.landing-hero-glow {
+  position: absolute;
+  top: -40%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24rem;
+  height: 14rem;
+  background: radial-gradient(circle, var(--c-primary-subtle) 0%, transparent 70%);
+  pointer-events: none;
+  filter: blur(40px);
+  opacity: 0.8;
+}
+
+.landing-hero-tagline {
+  margin: 0 0 1.75rem 0;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--c-text-muted);
   text-align: center;
-  font-size: 0.9375rem;
+  max-width: 32rem;
   line-height: 1.5;
-  max-width: 28rem;
+}
+
+.landing-drop-hint {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1.25rem 0 0;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--c-text-subtle);
+}
+
+/* ── Bento Grid Section ─────────────────────────────────────── */
+.landing-bento-section {
+  width: 100%;
+  max-width: 58rem;
+  margin-bottom: 2.5rem;
+}
+
+.landing-bento-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding: 0 0.25rem;
+}
+
+.landing-bento-title {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--c-text-subtle);
+}
+
+.landing-bento-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 0.875rem;
+}
+
+.landing-bento-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.125rem;
+  border-radius: 1rem;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.landing-bento-card:hover {
+  background: var(--c-hover);
+  border-color: var(--c-primary-border);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px -6px rgba(0, 0, 0, 0.12);
+}
+
+.landing-bento-card-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 0.75rem;
+  background: var(--c-primary-tint);
+  color: var(--c-accent-fg, var(--c-primary));
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.landing-bento-card:hover .landing-bento-card-icon-wrap {
+  transform: scale(1.06);
+}
+
+.landing-bento-card-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.landing-bento-card-title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--c-text);
+  margin-bottom: 0.15rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.landing-bento-card-desc {
+  font-size: 0.775rem;
+  color: var(--c-text-muted);
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.landing-bento-card-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--c-text-subtle);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.landing-bento-card:hover .landing-bento-card-arrow {
+  opacity: 1;
+  transform: translateX(0);
+  color: var(--c-accent-fg, var(--c-primary));
+}
+
+/* ── Trust & Capabilities Badges ────────────────────────────── */
+.landing-badges-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  background: var(--c-surface-sunken);
+  border: 1px solid var(--c-border-subtle);
+}
+
+.landing-badge-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   color: var(--c-text-muted);
 }
 
-/* ── Document stack ──────────────────────────────────────── */
-.landing-stack {
-  position: relative;
-  z-index: 1;
-  width: var(--landing-stack-w);
-  min-width: var(--landing-stack-w);
-  height: var(--landing-stack-h);
-  min-height: var(--landing-stack-h);
-  margin-left: auto;
-  margin-right: auto;
-  flex-shrink: 0;
-  overflow: visible;
-}
-
-/* Sheets — static white, never change with theme */
-.landing-sheet {
-  position: absolute;
-  border-radius: 12px;
-  background-color: #ffffff;
-  cursor: default;
-}
-
-.landing-sheet--back {
-  width: 128px;
-  height: 160px;
-  transform-origin: bottom center;
-  border: 1px solid var(--c-illustration-line);
-  box-shadow: var(--landing-doc-shadow-back-idle);
-}
-
-.landing-sheet--left {
-  left: 8px;
-  top: 12px;
-  transform: rotate(-8deg);
-}
-
-.landing-sheet--right {
-  right: 8px;
-  top: 12px;
-  transform: rotate(8deg);
-}
-
-.landing-sheet--front {
-  left: 50%;
-  top: 0;
-  z-index: 10;
-  width: 144px;
-  height: 176px;
-  margin-left: -72px;
-  overflow: hidden;
-  box-shadow: var(--landing-doc-shadow-front-idle);
-}
-
-.landing-sheet-header {
-  display: flex;
-  height: 40px;
-  align-items: center;
-  gap: 8px;
-  padding: 0 12px;
-  border-radius: 12px 12px 0 0;
-  background: var(--landing-hero-gradient);
-}
-
-.landing-sheet-dot {
-  width: 10px;
-  height: 10px;
+.landing-badge-divider {
+  width: 4px;
+  height: 4px;
   border-radius: 9999px;
+  background: var(--c-border-strong);
 }
 
-.landing-sheet-body {
-  padding: 10px 12px;
+/* ── Dropzone Drag Over States ──────────────────────────────── */
+.landing-dropzone[data-accept] .landing-hero-card {
+  border-color: var(--c-primary);
+  box-shadow: 0 0 0 3px var(--c-primary-subtle), 0 12px 32px -8px rgba(0, 0, 0, 0.2);
+  transform: scale(1.01);
 }
 
-.landing-sheet-side-body {
-  padding: 12px;
-}
-
-/* Bars — static light colours, never change with theme */
-.landing-bar {
-  border-radius: 9999px;
-  background-color: var(--c-illustration-line);
-}
-.landing-bar--strong {
-  background-color: var(--c-illustration-line-strong);
-}
-
-/* ── Action buttons ──────────────────────────────────────── */
-.landing-btn-icon {
-  min-height: 3rem !important;
-  width: 3rem !important;
-  min-width: 3rem !important;
-  border-radius: 0.75rem !important;
-}
-
-/* Dropzone accept/reject outlines. Mantine 8 no longer supports nested
- * `&[data-accept]` selectors inside the `styles` prop object, so these are
- * plain CSS attribute selectors on a class applied to the Dropzone root. */
-.landing-dropzone[data-accept] {
-  outline: 2px dashed var(--c-primary);
-  outline-offset: 4px;
-}
-.landing-dropzone[data-reject] {
-  outline: 2px dashed var(--mantine-color-red-6);
-  outline-offset: 4px;
+.landing-dropzone[data-reject] .landing-hero-card {
+  border-color: var(--c-danger);
+  box-shadow: 0 0 0 3px var(--c-danger-subtle);
 }

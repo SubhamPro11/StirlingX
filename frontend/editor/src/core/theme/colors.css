@@ -140,16 +140,16 @@ html[data-app-theme="light"] {
 /* ── MIDNIGHT (original navy) — also the default portal/Storybook dark ────── */
 [data-theme="dark"],
 html[data-app-theme="midnight"] {
-  --c-bg: var(--p-c-141416);
-  --c-bg-raised: var(--p-zinc-850);
-  --c-surface: var(--p-c-1a1a1d);
-  --c-surface-raised: var(--p-zinc-650);
-  --c-surface-sunken: var(--p-zinc-850);
-  --c-input-bg: var(--c-surface);
-  --c-modal-surface: var(--c-surface);
-  --c-hover: var(--p-gray-800);
-  --c-active: var(--p-gray-800);
-  --c-overlay: rgba(0, 0, 0, 0.6);
+  --c-bg: var(--p-black);
+  --c-bg-raised: var(--p-zinc-950);
+  --c-surface: var(--p-zinc-950);
+  --c-surface-raised: var(--p-zinc-850);
+  --c-surface-sunken: var(--p-black);
+  --c-input-bg: var(--p-black);
+  --c-modal-surface: var(--p-zinc-950);
+  --c-hover: var(--p-zinc-800);
+  --c-active: var(--p-zinc-800);
+  --c-overlay: rgba(0, 0, 0, 0.7);
 
   --c-text: var(--p-snow);
   --c-text-muted: var(--p-zinc-200);
@@ -349,27 +349,23 @@ html[data-app-theme="custom"][data-mantine-color-scheme="dark"] {
   --c-overlay: rgba(0, 0, 0, 0.6);
 
   /* Accent-tinted surfaces (dark base). Neutralised by the default override. */
-  --c-bg: color-mix(in srgb, var(--c-primary) 8%, var(--p-c-141416));
-  --c-bg-raised: color-mix(in srgb, var(--c-primary) 9%, var(--p-zinc-850));
-  --c-surface: color-mix(in srgb, var(--c-primary) 8%, var(--p-c-1a1a1d));
+  --c-bg: var(--p-black);
+  --c-bg-raised: color-mix(in srgb, var(--c-primary) 5%, var(--p-zinc-950));
+  --c-surface: color-mix(in srgb, var(--c-primary) 5%, var(--p-zinc-950));
   --c-surface-raised: color-mix(
     in srgb,
-    var(--c-primary) 9%,
-    var(--p-zinc-775)
+    var(--c-primary) 6%,
+    var(--p-zinc-850)
   );
-  --c-surface-sunken: color-mix(
-    in srgb,
-    var(--c-primary) 8%,
-    var(--p-zinc-900)
-  );
-  --c-input-bg: var(--c-surface);
-  --c-hover: color-mix(in srgb, var(--c-primary) 12%, var(--p-zinc-750));
-  --c-active: color-mix(in srgb, var(--c-primary) 15%, var(--p-zinc-700));
-  --c-border: color-mix(in srgb, var(--c-primary) 14%, var(--p-c-28282d));
+  --c-surface-sunken: var(--p-black);
+  --c-input-bg: var(--p-black);
+  --c-hover: color-mix(in srgb, var(--c-primary) 10%, var(--p-zinc-800));
+  --c-active: color-mix(in srgb, var(--c-primary) 12%, var(--p-zinc-750));
+  --c-border: color-mix(in srgb, var(--c-primary) 10%, var(--p-zinc-800));
   --c-border-subtle: color-mix(
     in srgb,
-    var(--c-primary) 10%,
-    var(--p-zinc-700)
+    var(--c-primary) 8%,
+    var(--p-zinc-850)
   );
 
   /* Dark-tuned status shades (lighter than the light-theme :root values). */
@@ -421,14 +417,14 @@ html[data-app-theme="custom"][data-accent="default"] {
 }
 
 html[data-app-theme="custom"][data-accent="default"][data-mantine-color-scheme="dark"] {
-  --c-bg: var(--p-c-141416);
-  --c-bg-raised: var(--p-zinc-850);
-  --c-surface: var(--p-c-1a1a1d);
-  --c-surface-raised: var(--p-zinc-775);
-  --c-surface-sunken: var(--p-zinc-900);
-  --c-input-bg: var(--c-surface);
-  --c-hover: var(--p-zinc-750);
-  --c-active: var(--p-zinc-700);
-  --c-border: var(--p-c-28282d);
-  --c-border-subtle: var(--p-zinc-700);
+  --c-bg: var(--p-black);
+  --c-bg-raised: var(--p-zinc-950);
+  --c-surface: var(--p-zinc-950);
+  --c-surface-raised: var(--p-zinc-850);
+  --c-surface-sunken: var(--p-black);
+  --c-input-bg: var(--p-black);
+  --c-hover: var(--p-zinc-800);
+  --c-active: var(--p-zinc-750);
+  --c-border: var(--p-zinc-800);
+  --c-border-subtle: var(--p-zinc-850);
 }

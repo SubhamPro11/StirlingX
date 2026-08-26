@@ -6,30 +6,38 @@
   border: 1px solid var(--c-border-subtle);
   background: var(--c-surface);
   box-shadow: var(--shadow-md);
+  transition:
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
-/* The viewer's fixed bottom dock. The reveal lives here, not on the toolbar
-   itself, so it only plays where the bar actually enters from off-screen —
-   mirroring the workbench top bar's 280ms ease, upwards instead of downwards. */
+/* The viewer's fixed bottom dock: auto-hides and reveals on hover! */
 .pdf-viewer-toolbar-dock {
-  animation: pdf-viewer-toolbar-in 280ms ease both;
+  transition:
+    transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.3s ease;
+  transform: translateY(calc(100% - 14px));
+  opacity: 0.2;
+  pointer-events: auto !important;
+  padding-top: 1.5rem;
 }
 
-@keyframes pdf-viewer-toolbar-in {
-  from {
-    /* The bar's own height plus its gutter, so it starts fully off-screen
-       however tall the controls wrap. */
-    transform: translateY(calc(100% + var(--nav-gutter)));
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+.pdf-viewer-toolbar-dock:hover,
+.pdf-viewer-toolbar-dock:focus-within {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.pdf-viewer-toolbar-dock:hover .pdf-viewer-toolbar,
+.pdf-viewer-toolbar-dock:focus-within .pdf-viewer-toolbar {
+  box-shadow: var(--shadow-xl);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .pdf-viewer-toolbar-dock {
-    animation: none;
+  .pdf-viewer-toolbar-dock,
+  .pdf-viewer-toolbar {
+    transition: none !important;
   }
 }
+

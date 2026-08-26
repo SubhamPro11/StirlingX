@@ -1,3 +1,7 @@
+/* ============================================================
+   Tool Picker — Modern Studio Palette Styles
+   ============================================================ */
+
 .tool-picker-scrollable {
   overflow-y: auto !important;
   overflow-x: hidden !important;
@@ -27,23 +31,26 @@
 .tool-subcategory-title {
   text-transform: uppercase;
   padding-bottom: 0.5rem;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
   color: var(--c-text-subtle);
-  /* Align the text with tool labels to account for icon gutter */
-  padding-left: 1rem;
+  padding-left: 0.5rem;
 }
 
-/* New row-style subcategory header with rule */
+/* Row-style subcategory header with rule */
 .tool-subcategory-row {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  padding: 0.4rem 0.25rem 0.2rem;
 }
 
 .tool-subcategory-row-title {
   text-transform: uppercase;
-  font-weight: 600;
-  font-size: 0.75rem;
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
   color: var(--c-text-subtle);
   white-space: nowrap;
   overflow: visible;
@@ -55,32 +62,35 @@
   flex: 1 1 auto;
 }
 
-/* Selected tool highlight — theme-aware via the adaptive --c-active token */
 :root {
   --tool-button-selected-bg: var(--c-active);
 }
 
-/* Compact tool buttons (padding via the Button `p`/`py` props).
-   List rows hug their content — drop the shared Button's min-height floor
-   so height = icon/label only and rows sit tight against each other. */
 .tool-button {
   font-size: 0.875rem;
+  border-radius: 8px !important;
+  transition: all 0.15s ease;
+  margin-bottom: 2px;
 }
 
 .tool-button.sui-btn.mantine-Button-root {
-  min-height: 0;
+  min-height: 2.25rem;
+  padding-left: 0.5rem !important;
+  padding-right: 0.5rem !important;
+}
+
+.tool-button:hover {
+  background-color: var(--c-hover) !important;
 }
 
 .tool-button .mantine-Button-label {
   font-size: 0.84rem;
   font-weight: 500;
-  /* ≥1.4 so the overflow:hidden label box contains glyph descenders (g/y/p);
-     row height is icon-bound (~24px) so this doesn't change row size. */
   line-height: 1.4;
 }
 
 .tool-button-icon {
-  font-size: 1rem;
+  font-size: 1.1rem;
   line-height: 1;
 }
 
@@ -93,10 +103,10 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  right: 0.35rem;
+  right: 0.5rem;
   opacity: 0;
   transition: opacity 0.2s ease;
-  z-index: var(--z-toolpicker-star); /* lower than sticky section headers */
+  z-index: var(--z-toolpicker-star);
 }
 
 .tool-button-container:hover .tool-button-star {
@@ -110,14 +120,14 @@
 
 .tool-button__description {
   font-size: 0.75rem;
-  color: var(--mantine-color-dimmed);
+  color: var(--c-text-muted);
   line-height: 1.35;
   margin-top: 0.15rem;
   white-space: normal;
   text-align: left;
 }
 
-/* Resting / compact tool list — taller rows, room for description. */
+/* Resting / compact tool list */
 .tool-picker__compact {
   padding: 0.5rem var(--mantine-spacing-sm) var(--mantine-spacing-sm);
 }
@@ -129,9 +139,10 @@
 .tool-picker__compact-list {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.35rem;
 }
 
 .tool-picker__view-all {
   margin-top: 0.75rem;
+  border-radius: 8px !important;
 }
