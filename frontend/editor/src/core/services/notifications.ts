@@ -58,6 +58,7 @@ export async function fetchNotifications(
   try {
     const response = await apiClient.get<NotificationsResponse>(
       `${NOTIFICATIONS_PATH}?limit=${limit}`,
+      { suppressErrorToast: true },
     );
     return response?.data?.notifications ?? [];
   } catch {

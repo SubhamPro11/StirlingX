@@ -98,14 +98,22 @@ if (typeof window !== "undefined") {
  */
 export async function handleHttpError(error: unknown): Promise<boolean> {
   const axiosError = axios.isAxiosError(error) ? error : undefined;
+  const url: string | undefined = axiosError?.config?.url;
+  const status: number | undefined = axiosError?.response?.status;
   const skipAuthRedirect = axiosError?.config?.skipAuthRedirect === true;
-  // Check if this error should skip the global toast (component will handle it)
-  if (axiosError?.config?.suppressErrorToast === true) {
+
+  // Check if this error should skip the global toast (component will handle it or optional background poll)
+  if (
+    axiosError?.config?.suppressErrorToast === true ||
+    (status === 404 &&
+      url &&
+      (url.includes("/api/v1/notifications") ||
+        url.includes("/api/v1/policies") ||
+        url.includes("/api/v1/rules") ||
+        url.includes("/api/v1/updates")))
+  ) {
     return false; // Don't show global toast, but continue rejection
   }
-
-  // Handle 401 authentication errors
-  const status: number | undefined = axiosError?.response?.status;
   if (status === 401) {
     const pathname = window.location.pathname;
 
@@ -172,7 +180,6 @@ export async function handleHttpError(error: unknown): Promise<boolean> {
   }
 
   // 2) Generic-vs-special dedupe by endpoint
-  const url: string | undefined = axiosError?.config?.url;
   const now = Date.now();
   const isSpecial =
     status === 422 ||

@@ -144,6 +144,12 @@ export async function getPolicyRun(runId: string): Promise<PolicyRunView> {
  * finished run is never orphaned on the backend.
  */
 export async function listPolicyRuns(): Promise<PolicyRunView[]> {
-  const res = await apiClient.get<PolicyRunView[]>("/api/v1/policies/runs");
-  return res.data;
+  try {
+    const res = await apiClient.get<PolicyRunView[]>("/api/v1/policies/runs", {
+      suppressErrorToast: true,
+    });
+    return res.data;
+  } catch {
+    return [];
+  }
 }
