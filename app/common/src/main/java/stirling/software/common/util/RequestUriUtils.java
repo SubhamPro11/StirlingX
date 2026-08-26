@@ -201,6 +201,8 @@ public class RequestUriUtils {
                 // enableLogin)
                 || trimmedUri.startsWith(
                         "/api/v1/ui-data/footer-info") // Public footer configuration
+                || trimmedUri.startsWith(
+                        "/api/v1/ui-data/licenses") // Public open source backend licenses
                 || trimmedUri.startsWith("/api/v1/invite/validate")
                 || trimmedUri.startsWith("/api/v1/invite/accept")
                 // Health Endpoints
