@@ -40,16 +40,13 @@ export interface MachineInfo {
 }
 
 export class UpdateService {
-  private readonly baseUrl =
-    "https://supabase.stirling.com/functions/v1/updates";
-
   /**
    * Compare two version strings
    * @returns 1 if v1 > v2, -1 if v1 < v2, 0 if equal
    */
   compareVersions(version1: string, version2: string): number {
-    const v1 = version1.split(".");
-    const v2 = version2.split(".");
+    const v1 = version1.replace(/^v/, "").split(".");
+    const v2 = version2.replace(/^v/, "").split(".");
 
     for (let i = 0; i < v1.length || i < v2.length; i++) {
       const n1 = parseInt(v1[i]) || 0;
@@ -69,7 +66,6 @@ export class UpdateService {
    * Get download URL based on machine type and security settings
    */
   getDownloadUrl(machineInfo: MachineInfo): string | null {
-    // Only show download for non-Docker installations
     if (
       machineInfo.machineType === "Docker" ||
       machineInfo.machineType === "Kubernetes"
@@ -77,7 +73,6 @@ export class UpdateService {
       return null;
     }
 
-    // Determine file based on machine type and security
     if (machineInfo.machineType === "Server-jar") {
       return (
         DOWNLOAD_BASE_URL +
@@ -87,9 +82,8 @@ export class UpdateService {
       );
     }
 
-    // Client installations
     if (machineInfo.machineType.startsWith("Client-")) {
-      const os = machineInfo.machineType.replace("Client-", ""); // win, mac, unix
+      const os = machineInfo.machineType.replace("Client-", "");
       const type = machineInfo.activeSecurity ? "-server-security" : "-server";
 
       if (os === "unix") {
@@ -105,103 +99,94 @@ export class UpdateService {
   }
 
   /**
-   * Fetch update summary from API
+   * Fetch update summary from GitHub Releases directly (no Supabase dependency)
    */
   async getUpdateSummary(
     currentVersion: string,
-    machineInfo: MachineInfo,
+    _machineInfo?: MachineInfo,
   ): Promise<UpdateSummary | null> {
-    // Map Java License enum to API types
-    let type = "normal";
-    if (machineInfo.licenseType === "SERVER") {
-      type = "server";
-    } else if (machineInfo.licenseType === "ENTERPRISE") {
-      type = "enterprise";
-    }
-
-    const url = `${this.baseUrl}?from=${currentVersion}&type=${type}&login=${machineInfo.activeSecurity}&summary=true`;
-    console.log("Fetching update summary from:", url);
-
     try {
-      const response = await fetch(url);
-      console.log("Response status:", response.status);
-
-      if (response.status === 200) {
-        const data = await response.json();
-        return data as UpdateSummary;
-      } else {
-        console.error(
-          "Failed to fetch update summary from Supabase:",
-          response.status,
-        );
+      const latestTag = await this.fetchLatestVersionFromGitHub();
+      if (!latestTag) {
         return null;
       }
-    } catch (error) {
-      console.error("Failed to fetch update summary from Supabase:", error);
+
+      const isNewer = this.compareVersions(latestTag, currentVersion) > 0;
+      return {
+        latest_version: latestTag,
+        latest_stable_version: latestTag,
+        max_priority: "normal",
+        any_breaking: false,
+        recommended_action: isNewer
+          ? "A new version of StirlingX is available."
+          : undefined,
+      };
+    } catch {
       return null;
     }
   }
 
   /**
-   * Fetch full update information with detailed version info
+   * Fetch full update information
    */
   async getFullUpdateInfo(
     currentVersion: string,
     machineInfo: MachineInfo,
   ): Promise<FullUpdateInfo | null> {
-    // Map Java License enum to API types
-    let type = "normal";
-    if (machineInfo.licenseType === "SERVER") {
-      type = "server";
-    } else if (machineInfo.licenseType === "ENTERPRISE") {
-      type = "enterprise";
-    }
-
-    const url = `${this.baseUrl}?from=${currentVersion}&type=${type}&login=${machineInfo.activeSecurity}&summary=false`;
-    console.log("Fetching full update info from:", url);
-
     try {
-      const response = await fetch(url);
-      console.log("Full update response status:", response.status);
+      const summary = await this.getUpdateSummary(currentVersion, machineInfo);
+      if (!summary || !summary.latest_version) return null;
 
-      if (response.status === 200) {
-        const data = await response.json();
-        return data as FullUpdateInfo;
-      } else {
-        console.error(
-          "Failed to fetch full update info from Supabase:",
-          response.status,
-        );
-        return null;
-      }
-    } catch (error) {
-      console.error("Failed to fetch full update info from Supabase:", error);
+      return {
+        latest_version: summary.latest_version,
+        latest_stable_version:
+          summary.latest_stable_version ?? summary.latest_version,
+        new_versions: [
+          {
+            version: summary.latest_version,
+            priority: summary.max_priority,
+            announcement: {
+              title: `StirlingX v${summary.latest_version}`,
+              message:
+                "Latest release with updated UI and performance improvements.",
+            },
+            compatibility: {
+              breaking_changes: false,
+            },
+          },
+        ],
+      };
+    } catch {
       return null;
     }
   }
 
   /**
-   * Get current version from GitHub build.gradle as fallback
+   * Query GitHub API for the latest release tag
    */
-  async getCurrentVersionFromGitHub(): Promise<string> {
-    const url =
-      "https://raw.githubusercontent.com/Stirling-Tools/Stirling-PDF/release/build.gradle";
+  private async fetchLatestVersionFromGitHub(): Promise<string | null> {
+    const urls = [
+      "https://api.github.com/repos/SubhamPro11/StirlingX/releases/latest",
+      "https://api.github.com/repos/Stirling-Tools/Stirling-PDF/releases/latest",
+    ];
 
-    try {
-      const response = await fetch(url);
-      if (response.status === 200) {
-        const text = await response.text();
-        const versionRegex = /version\s*=\s*['"](\d+\.\d+\.\d+)['"]/;
-        const match = versionRegex.exec(text);
-        if (match) {
-          return match[1];
+    for (const url of urls) {
+      try {
+        const response = await fetch(url, {
+          headers: { Accept: "application/vnd.github.v3+json" },
+        });
+        if (response.ok) {
+          const data = (await response.json()) as { tag_name?: string };
+          if (data.tag_name) {
+            return data.tag_name.replace(/^v/, "");
+          }
         }
+      } catch {
+        // try next endpoint
       }
-      throw new Error("Version number not found");
-    } catch (error) {
-      console.error("Failed to fetch latest version from build.gradle:", error);
-      return "";
     }
+
+    return null;
   }
 }
 
