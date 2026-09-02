@@ -8,7 +8,7 @@ COPY engine/pyproject.toml engine/uv.lock ./
 RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --frozen --no-dev --no-install-project --group engine
 
-FROM python:3.13-slim-bookworm@sha256:00faa2debb87529f9f0764e9491d8ba400a3678976616c3bd7cb193745ac20d1 AS runtime
+FROM python:3.14-slim-bookworm@sha256:9ab8d9c8514b44f90cf0029dd42fdd7e9e211e639c8b995304cc04568dee900f AS runtime
 
 # Created before the COPYs so they land owned; a later chown -R duplicates the venv layer.
 RUN set -eux; \
